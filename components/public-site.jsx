@@ -63,7 +63,7 @@ export function PublicSite({ siteData }) {
   const renderPage = () => {
     switch (activePage) {
       case "home":
-        return <HomePage siteData={siteData} />;
+        return <HomePage siteData={siteData} goTo={setActivePage} />;
       case "events":
         return <EventsPage siteData={siteData} />;
       case "teams":
@@ -71,17 +71,147 @@ export function PublicSite({ siteData }) {
       case "schedule":
         return <SchedulePage siteData={siteData} />;
       case "register":
-        return <RegisterPage siteData={siteData} />;
+       function RegisterPage({ siteData }) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-14">
+      <SectionTitle eyebrow="报名支付" title="这里是报名与支付中心框架。" />
+      <div className="grid gap-5 md:grid-cols-2">
+        <CardBox>
+          <div className="p-6">
+            <div className="text-2xl font-bold">当前收费</div>
+            <p className="mt-4 text-3xl font-black">{siteData.mainEvent.fee}</p>
+            <p className="mt-3 text-slate-400">{siteData.mainEvent.title}</p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={`mailto:${siteData.contact.email}?subject=Lonely Horse 报名咨询`}
+                className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100"
+              >
+                邮件报名咨询
+              </a>
+
+              <a
+                href={`tel:${siteData.contact.phone}`}
+                className="rounded-2xl border border-white/20 px-4 py-2 text-sm text-white hover:bg-white/10"
+              >
+                电话咨询
+              </a>
+            </div>
+          </div>
+        </CardBox>
+
+        <CardBox>
+          <div className="p-6">
+            <div className="text-2xl font-bold">后续可接入</div>
+            <p className="mt-3 text-slate-400">Google Form、Tally、Stripe、支付成功页、确认邮件。</p>
+          </div>
+        </CardBox>
+      </div>
+    </section>
+  );
+}
       case "news":
         return <NewsPage siteData={siteData} />;
       case "sponsors":
-        return <SponsorsPage siteData={siteData} />;
+        function SponsorsPage({ siteData }) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-14">
+      <SectionTitle eyebrow="商务合作" title="赞助商与合作伙伴展示区。" />
+
+      <div className="mb-8 flex flex-wrap gap-3">
+        <a
+          href={`mailto:${siteData.contact.email}?subject=Lonely Horse 商务合作`}
+          className="rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 hover:bg-slate-100"
+        >
+          立即洽谈合作
+        </a>
+
+        <a
+          href={`tel:${siteData.contact.phone}`}
+          className="rounded-2xl border border-white/20 px-5 py-3 text-sm text-white hover:bg-white/10"
+        >
+          电话联系
+        </a>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {siteData.sponsors.map((item) => (
+          <CardBox key={item}>
+            <div className="flex min-h-[120px] items-center justify-center p-6 text-slate-300">
+              {item}
+            </div>
+          </CardBox>
+        ))}
+      </div>
+    </section>
+  );
+}
       case "rules":
         return <RulesPage siteData={siteData} />;
       case "faq":
         return <FAQPage siteData={siteData} />;
       case "contact":
-        return <ContactPage siteData={siteData} />;
+        function ContactPage({ siteData }) {
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-14">
+      <SectionTitle eyebrow="联系我们" title="联系页框架" />
+      <div className="grid gap-5 md:grid-cols-2">
+        <CardBox>
+          <div className="space-y-4 p-6 text-slate-300">
+            <div>
+              邮箱：
+              <a
+                href={`mailto:${siteData.contact.email}`}
+                className="ml-2 text-cyan-300 hover:text-cyan-200"
+              >
+                {siteData.contact.email}
+              </a>
+            </div>
+
+            <div>
+              微信：
+              <span className="ml-2">{siteData.contact.wechat}</span>
+            </div>
+
+            <div>
+              电话：
+              <a
+                href={`tel:${siteData.contact.phone}`}
+                className="ml-2 text-cyan-300 hover:text-cyan-200"
+              >
+                {siteData.contact.phone}
+              </a>
+            </div>
+
+            <div>城市：{siteData.contact.city}</div>
+          </div>
+        </CardBox>
+
+        <CardBox>
+          <div className="p-6 text-slate-400 space-y-4">
+            <p>赛事报名、商务合作、赞助咨询都可以通过邮箱或电话直接联系。</p>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`mailto:${siteData.contact.email}?subject=Lonely Horse 合作咨询`}
+                className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100"
+              >
+                发送邮件
+              </a>
+
+              <a
+                href={`tel:${siteData.contact.phone}`}
+                className="rounded-2xl border border-white/20 px-4 py-2 text-sm text-white hover:bg-white/10"
+              >
+                立即拨打
+              </a>
+            </div>
+          </div>
+        </CardBox>
+      </div>
+    </section>
+  );
+}
       case "about":
         return <AboutPage siteData={siteData} />;
       default:
@@ -206,7 +336,7 @@ export function PublicSite({ siteData }) {
   );
 }
 
-function HomePage({ siteData }) {
+function HomePage({ siteData, goTo }) {
   return (
     <>
       <section className="relative overflow-hidden border-b border-white/10">
@@ -226,9 +356,12 @@ function HomePage({ siteData }) {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-2xl bg-white px-6 py-3 font-semibold text-slate-950 hover:bg-slate-100">
-                立即报名
-              </button>
+              <button
+  onClick={() => goTo("register")}
+  className="rounded-2xl bg-white px-6 py-3 font-semibold text-slate-950 hover:bg-slate-100"
+>
+  立即报名
+</button>
               
             </div>
           </div>
@@ -488,16 +621,54 @@ function ContactPage({ siteData }) {
       <div className="grid gap-5 md:grid-cols-2">
         <CardBox>
           <div className="space-y-4 p-6 text-slate-300">
-            <div>邮箱：{siteData.contact.email}</div>
-            <div>微信：{siteData.contact.wechat}</div>
-            <div>电话：{siteData.contact.phone}</div>
+            <div>
+              邮箱：
+              <a
+                href={`mailto:${siteData.contact.email}`}
+                className="ml-2 text-cyan-300 hover:text-cyan-200"
+              >
+                {siteData.contact.email}
+              </a>
+            </div>
+
+            <div>
+              微信：
+              <span className="ml-2">{siteData.contact.wechat}</span>
+            </div>
+
+            <div>
+              电话：
+              <a
+                href={`tel:${siteData.contact.phone}`}
+                className="ml-2 text-cyan-300 hover:text-cyan-200"
+              >
+                {siteData.contact.phone}
+              </a>
+            </div>
+
             <div>城市：{siteData.contact.city}</div>
           </div>
         </CardBox>
 
         <CardBox>
-          <div className="p-6 text-slate-400">
-            后续可接入联系表单、自动邮件、预约咨询。
+          <div className="p-6 text-slate-400 space-y-4">
+            <p>赛事报名、商务合作、赞助咨询都可以通过邮箱或电话直接联系。</p>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`mailto:${siteData.contact.email}?subject=Lonely Horse 合作咨询`}
+                className="rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100"
+              >
+                发送邮件
+              </a>
+
+              <a
+                href={`tel:${siteData.contact.phone}`}
+                className="rounded-2xl border border-white/20 px-4 py-2 text-sm text-white hover:bg-white/10"
+              >
+                立即拨打
+              </a>
+            </div>
           </div>
         </CardBox>
       </div>
