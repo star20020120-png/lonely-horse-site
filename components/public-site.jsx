@@ -51,7 +51,7 @@ function CardBox({ children, className = "" }) {
   );
 }
 
-export function PublicSite({ siteData, onOpenAdmin }) {
+export function PublicSite({ siteData }) {
   const [activePage, setActivePage] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -63,7 +63,7 @@ export function PublicSite({ siteData, onOpenAdmin }) {
   const renderPage = () => {
     switch (activePage) {
       case "home":
-        return <HomePage siteData={siteData} onOpenAdmin={onOpenAdmin} />;
+        return <HomePage siteData={siteData} />;
       case "events":
         return <EventsPage siteData={siteData} />;
       case "teams":
@@ -125,12 +125,7 @@ export function PublicSite({ siteData, onOpenAdmin }) {
               当前页面：{activeLabel}
             </span>
 
-            <button
-              onClick={onOpenAdmin}
-              className="hidden rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-slate-100 md:inline-flex"
-            >
-              进入后台
-            </button>
+           
 
             <button
               onClick={() => setMobileMenuOpen((v) => !v)}
@@ -163,12 +158,7 @@ export function PublicSite({ siteData, onOpenAdmin }) {
                 );
               })}
 
-              <button
-                onClick={onOpenAdmin}
-                className="rounded-2xl bg-white px-4 py-3 text-left text-sm font-semibold text-slate-950"
-              >
-                进入后台
-              </button>
+              
             </div>
           </div>
         )}
@@ -216,7 +206,7 @@ export function PublicSite({ siteData, onOpenAdmin }) {
   );
 }
 
-function HomePage({ siteData, onOpenAdmin }) {
+function HomePage({ siteData }) {
   return (
     <>
       <section className="relative overflow-hidden border-b border-white/10">
@@ -239,12 +229,7 @@ function HomePage({ siteData, onOpenAdmin }) {
               <button className="rounded-2xl bg-white px-6 py-3 font-semibold text-slate-950 hover:bg-slate-100">
                 立即报名
               </button>
-              <button
-                onClick={onOpenAdmin}
-                className="rounded-2xl border border-white/20 px-6 py-3 text-white hover:bg-white/10"
-              >
-                进入后台
-              </button>
+              
             </div>
           </div>
 
